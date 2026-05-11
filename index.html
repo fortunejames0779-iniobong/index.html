@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fortune Iniobong James — Web Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0b1120;
+      --deep: #111827;
+      --card: #161f30;
+      --gold: #c9a84c;
+      --gold-light: #e8c96e;
+      --cream: #f5f0e8;
+      --muted: #8a96a8;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .45;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 5%;
+      background: rgba(11,17,32,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,.12);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .02em;
+    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: .85rem; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; place-items: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      pointer-events: none;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translate(-50%,-50%) scale(1); opacity:.8; }
+      50% { transform: translate(-50%,-50%) scale(1.12); opacity:1; }
+    }
+    .hero-inner {
+      text-align: center; position: relative; z-index: 1;
+      animation: fadeUp .9s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .hero-tag {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+      padding: .35rem 1rem; border-radius: 100px;
+      margin-bottom: 1.8rem;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--white);
+      margin-bottom: .5rem;
+    }
+    .hero-name span { color: var(--gold); }
+    .hero-role {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--muted); font-weight: 300;
+      margin-bottom: 1rem; letter-spacing: .04em;
+    }
+    .hero-location {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2.5rem;
+    }
+    .hero-location svg { width:16px; height:16px; fill:var(--gold); }
+    .hero-cta {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600; font-size: .9rem; letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+      padding: .85rem 2.4rem; border-radius: 4px;
+      transition: background .25s, transform .2s;
+    }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 5%; position: relative; z-index: 1; }
+    .section-label {
+      font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .6rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .section-divider {
+      width: 48px; height: 2px; background: var(--gold);
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      max-width: 1000px; margin: 0 auto;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.85;
+      font-size: 1.02rem; margin-bottom: 1.2rem;
+    }
+    .about-text p strong { color: var(--cream); }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,.14);
+      border-radius: 8px; padding: 1.5rem;
+      transition: border-color .25s;
+    }
+    .stat-card:hover { border-color: var(--gold); }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 900; color: var(--gold);
+    }
+    .stat-label { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--deep); }
+    #skills .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.4rem; max-width: 1000px; margin: 0 auto;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,.1);
+      border-radius: 10px; padding: 1.6rem;
+      transition: transform .25s, border-color .25s;
+    }
+    .skill-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+    .skill-icon { font-size: 1.8rem; margin-bottom: .9rem; }
+    .skill-name {
+      font-weight: 600; font-size: 1.05rem; color: var(--cream);
+      margin-bottom: .5rem;
+    }
+    .skill-desc { font-size: .87rem; color: var(--muted); line-height: 1.6; }
+    .skill-bar-wrap {
+      margin-top: 1rem; background: rgba(255,255,255,.06);
+      border-radius: 100px; height: 4px; overflow: hidden;
+    }
+    .skill-bar {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      animation: growBar 1.2s ease both;
+    }
+    @keyframes growBar { from { width:0; } }
+
+    /* ── PROJECTS ── */
+    #projects .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.6rem; max-width: 1050px; margin: 0 auto;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,.1);
+      border-radius: 12px; overflow: hidden;
+      transition: transform .28s, border-color .28s;
+    }
+    .project-card:hover { transform: translateY(-6px); border-color: var(--gold); }
+    .project-thumb {
+      height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .project-body { padding: 1.5rem; }
+    .project-tag {
+      font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .5rem;
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--white); margin-bottom: .6rem;
+    }
+    .project-desc { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--deep); text-align: center; }
+    #contact .contact-inner { max-width: 620px; margin: 0 auto; }
+    #contact p {
+      color: var(--muted); font-size: 1.05rem;
+      line-height: 1.8; margin-bottom: 2.5rem;
+    }
+    .contact-links {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: .6rem;
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,.18);
+      color: var(--cream); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      padding: .75rem 1.5rem; border-radius: 6px;
+      transition: border-color .25s, color .25s, transform .2s;
+    }
+    .contact-link:hover {
+      border-color: var(--gold); color: var(--gold); transform: translateY(-2px);
+    }
+    .contact-link svg { width:18px; height:18px; fill:currentColor; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem 5%;
+      border-top: 1px solid rgba(201,168,76,.1);
+      color: var(--muted); font-size: .82rem;
+      position: relative; z-index: 1;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      #about .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FIJ</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Available for Projects</div>
+    <h1 class="hero-name">Fortune<br><span>Iniobong James</span></h1>
+    <p class="hero-role">Web Designer &amp; Machine Learning Enthusiast</p>
+    <div class="hero-location">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+      Akwa Ibom State, Nigeria
+    </div>
+    <a href="#contact" class="hero-cta">Get In Touch</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Designing the Future,<br>One Pixel at a Time</h2>
+      <div class="section-divider"></div>
+      <p>Hi! I'm <strong>Fortune Iniobong James</strong>, a 17-year-old web designer from <strong>Akwa Ibom State, Nigeria</strong>, with a passion for crafting beautiful, functional digital experiences.</p>
+      <p>Beyond design, I have a deep interest in <strong>machine learning and coding</strong> — exploring how intelligent systems can power the next generation of the web.</p>
+      <p>Young, driven, and always learning — I believe great design is where art meets technology.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">17</div>
+        <div class="stat-label">Years Old</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">NG</div>
+        <div class="stat-label">Based in Nigeria</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2+</div>
+        <div class="stat-label">Years Designing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Ideas to Build</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div style="max-width:1000px;margin:0 auto;">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">My Skills</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">Web Design</div>
+      <div class="skill-desc">Creating visually compelling, user-friendly interfaces with strong layout, colour, and typography principles.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">HTML &amp; CSS</div>
+      <div class="skill-desc">Building structured, semantic, and beautifully styled web pages from scratch.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">Coding &amp; Logic</div>
+      <div class="skill-desc">Strong programming fundamentals and problem-solving skills applied to real-world projects.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Machine Learning</div>
+      <div class="skill-desc">Exploring ML concepts and models — bridging the gap between intelligent systems and the web.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📐</div>
+      <div class="skill-name">UI/UX Principles</div>
+      <div class="skill-desc">Designing with the user in mind — intuitive flows, clear hierarchy, and purposeful interactions.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-name">Fast Learner</div>
+      <div class="skill-desc">Constantly picking up new tools, frameworks, and technologies to stay ahead of the curve.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div style="max-width:1050px;margin:0 auto;">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Featured Work</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1a2540,#2a3a60)">🌐</div>
+      <div class="project-body">
+        <p class="project-tag">Web Design</p>
+        <h3 class="project-title">Business Landing Page</h3>
+        <p class="project-desc">A clean, conversion-focused landing page for a local Nigerian business with mobile-first design.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1f2b20,#2e4230)">🤖</div>
+      <div class="project-body">
+        <p class="project-tag">Machine Learning</p>
+        <h3 class="project-title">ML Experiment Project</h3>
+        <p class="project-desc">Exploring machine learning models and integrating predictive features into web interfaces.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#251a20,#3d2535)">🎨</div>
+      <div class="project-body">
+        <p class="project-tag">UI Design</p>
+        <h3 class="project-title">Portfolio UI Concept</h3>
+        <p class="project-desc">A creative portfolio template concept designed to showcase creative professionals in Nigeria and beyond.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label">Let's Connect</p>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="section-divider" style="margin:0 auto 2rem;"></div>
+    <p>I'm open to freelance projects, collaborations, and new opportunities. Whether you have a project in mind or just want to say hello — my inbox is open!</p>
+    <div class="contact-links">
+      <a href="mailto:fortune@example.com" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Email Me
+      </a>
+      <a href="#" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="#" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Fortune Iniobong James</span> · Crafted with passion from Akwa Ibom, Nigeria 🇳🇬</p>
+</footer>
+
+</body>
+</html>
